@@ -19,11 +19,11 @@
 
     <div class="header-actions">
       <div class="pill">
-        <span class="pill__num">0</span>
+        <span class="pill__num" id="loveCount">0</span>
         <img class="pill__icon" src="assets/heart.png" alt="" />
       </div>
       <div class="pill pill--soft">
-        <span class="pill__num">100</span>
+        <span class="pill__num" id="coinCount">100</span>
         <img class="pill__icon" src="assets/coin.png" alt="" />
       </div>
       <button class="btn btn--primary" type="button">0 Copy</button>
@@ -65,7 +65,7 @@
     <article class="card">
       <header class="card__top">
         <img class="card__icon" src="assets/police.png" alt="" />
-        <button class="card__fav">❤</button>
+        <button class="card__fav" >❤</button>
       </header>
       <h3 class="card__title">পুলিশ</h3>
       <p class="card__subtitle">Police</p>
@@ -80,7 +80,7 @@
     <article class="card">
       <header class="card__top">
         <img class="card__icon" src="assets/fire-service.png" alt="" />
-        <button class="card__fav">❤</button>
+        <button class="card__fav" >❤</button>
       </header>
       <h3 class="card__title">ফায়ার সার্ভিস</h3>
       <p class="card__subtitle">Fire Service</p>
@@ -95,7 +95,7 @@
     <article class="card">
       <header class="card__top">
         <img class="card__icon" src="assets/ambulance.png" alt="" />
-        <button class="card__fav">❤</button>
+        <button class="card__fav" >❤</button>
       </header>
       <h3 class="card__title">অ্যাম্বুলেন্স</h3>
       <p class="card__subtitle">Ambulance</p>
@@ -110,7 +110,7 @@
     <article class="card">
       <header class="card__top">
         <img class="card__icon" src="assets/emergency.png" alt="" />
-        <button class="card__fav">❤</button>
+        <button class="card__fav" >❤</button>
       </header>
       <h3 class="card__title">নারী ও শিশু সহায়তা</h3>
       <p class="card__subtitle">Women & Child Helpline</p>
@@ -155,7 +155,7 @@
     <article class="card">
       <header class="card__top">
         <img class="card__icon" src="assets/emergency.png" alt="" />
-        <button class="card__fav">❤</button>
+        <button class="card__fav" >❤</button>
       </header>
       <h3 class="card__title">ব্র্যাক</h3>
       <p class="card__subtitle">Brac</p>
@@ -170,7 +170,7 @@
     <article class="card">
       <header class="card__top">
         <img class="card__icon" src="assets/emergency.png" alt="" />
-        <button class="card__fav">❤</button>
+        <button class="card__fav" >❤</button>
       </header>
       <h3 class="card__title">বাংলাদেশ রেলওয়ে</h3>
       <p class="card__subtitle">Bangladesh Railway</p>
@@ -185,22 +185,19 @@
   </section>
 
   
-  <aside class="history">
-    <div class="history__header">
-      <h4>📞 Call History</h4>
-      <button class="btn btn--soft">Clear</button>
-    </div>
-    <ul class="history__list">
-      <li class="history__item">
-        <div class="history__name">জাতীয় জরুরি সেবা</div>
-        <div class="history__small">999</div>
-        <time class="history__time">11:36:58 AM</time>
-      </li>
-    </ul>
-  </aside>
+  <aside class="history" aria-label="Call history">
+  <div class="history__header">
+    <h4>📞 Call History</h4>
+    <button class="btn btn--soft" id="clearHistory" type="button">Clear</button>
+  </div>
+  <ul class="history__list" id="historyList"></ul>
+</aside>
+
 </main>
 
     
 
 </body>
+<script src="app.js?v=1" defer></script>
+
 </html>
