@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loveCountEl = document.getElementById("loveCount");
+  const coinEl = document.getElementById("coinCount");
+  const copyCountEl = document.getElementById("copyCount");
+  const historyList = document.getElementById("historyList");
+  const clearBtn = document.getElementById("clearHistory");
+
   let loveCount = parseInt(loveCountEl?.textContent || "0", 10);
+  let coins = 100;
+  let copyCount = 0;
+
+  if (coinEl) coinEl.textContent = coins;
+  if (copyCountEl) copyCountEl.textContent = copyCount;
 
   document.querySelectorAll(".card__fav").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -8,13 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
       loveCountEl.textContent = loveCount;
     });
   });
-
-  const coinEl = document.getElementById("coinCount");
-  let coins = 100;
-  if (coinEl) coinEl.textContent = coins;
-
-  const historyList = document.getElementById("historyList");
-  const clearBtn = document.getElementById("clearHistory");
 
   function addHistory(service, number) {
     const li = document.createElement("li");
@@ -31,27 +34,57 @@ document.addEventListener("DOMContentLoaded", () => {
     historyList.innerHTML = "";
   });
 
-  document.addEventListener("click", (e) => {
-    const callBtn = e.target.closest(".btn--call");
-    if (!callBtn) return;
+  async function handleCopy(copyBtn){
+    const card = copyBtn.closest(".card");
+    const number = card?.querySelector(".card__number")?.textContent?.trim() || "";
+    if (!number || copyBtn.dataset.copying === "1") return;
 
-    if (coins <= 0) {
-      alert("❌ No coins left. You cannot make a call.");
+    try{
+      await navigator.clipboard.writeText(number);
+    }catch{
+      alert("❌ Copy not supported in this browser.");
       return;
     }
 
-    const card = callBtn.closest(".card");
-    const serviceName = card?.querySelector(".card__subtitle")?.textContent?.trim() || "Unknown Service";
-    const number = card?.querySelector(".card__number")?.textContent?.trim() || "";
+    copyCount++;
+    copyCountEl.textContent = copyCount;
 
-    coins = Math.max(0, coins - 20);
-    coinEl.textContent = coins;
+    const original = copyBtn.innerHTML;
+    copyBtn.dataset.copying = "1";
+    copyBtn.disabled = true;
+    copyBtn.classList.add("is-copied");
+    copyBtn.innerHTML = "✓ Copied";
 
-    alert(`📞 Calling ${serviceName} (${number})...`);
+    setTimeout(() => {
+      copyBtn.innerHTML = original;
+      copyBtn.classList.remove("is-copied");
+      copyBtn.disabled = false;
+      copyBtn.dataset.copying = "0";
+    }, 1200);
+  }
 
-    if (historyList) addHistory(serviceName, number);
+  document.addEventListener("click", (e) => {
+    const callBtn = e.target.closest(".btn--call");
+    if (callBtn) {
+      if (coins <= 0) {
+        alert(" No coins left. You cannot make a call.");
+        return;
+      }
+      const card = callBtn.closest(".card");
+      const serviceName = card?.querySelector(".card__subtitle")?.textContent?.trim() || "Unknown Service";
+      const number = card?.querySelector(".card__number")?.textContent?.trim() || "";
+      coins = Math.max(0, coins - 20);
+      coinEl.textContent = coins;
+      alert(`📞 Calling ${serviceName} (${number})...`);
+      if (historyList) addHistory(serviceName, number);
+      return;
+    }
+
+    const copyBtn = e.target.closest(".btn--ghost");
+    if (copyBtn) handleCopy(copyBtn);
   });
 });
+
 
 
 
