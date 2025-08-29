@@ -25,6 +25,7 @@
     - When someone do something (like click a button), the event starts right on that button.
       After the button handles it, the event moves upward to the element that contains the button (its parent).
       Then it keeps going up — from parent → grandparent → all the way up to the whole page (document) and even the browser window.
+      
 ## Question No - 04
     -  What is **Event Delegation** in JavaScript? Why is it useful?
 ---
@@ -38,3 +39,10 @@
 
     -Cleaner and Easier Code
      One don’t clutter his code with dozens of event attachments. One listener on the parent is simpler to manage and debug.
+
+## Question No - 05
+    - What is the difference between **preventDefault() and stopPropagation()** methods?
+---
+### Ans :
+    - In JavaScript, preventDefault() and stopPropagation() serve different purposes. preventDefault() stops the browser’s built-in behavior for an event, such as preventing a link from navigating or a form from submitting, but it does not stop the event from bubbling        up to parent elements. stopPropagation(), on the other hand, prevents the event from bubbling up the DOM tree to parent elements, but it does not block the default action. For example, when a button inside a form is clicked, preventDefault() would stop the form          from submitting, while stopPropagation() would stop the click from reaching the form’s parent event listeners.
+
