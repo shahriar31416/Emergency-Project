@@ -114,7 +114,7 @@ body{margin:0;
   width:1.6rem;height:1.6rem;display:grid;place-items:center;
   border:.06rem solid #e8edf3;
   border-radius:50%;background:#fff;
-  color:#ef4444;cursor:pointer
+  color: rgb(114, 119, 116);cursor:pointer
 }
 .card__title{margin:0;
     font-size:var(--h3);font-weight:800}
@@ -160,7 +160,37 @@ body{margin:0;
     margin:0;
     padding:0;
     display:grid;gap:.6rem;max-height:60vh;overflow:auto}
-.history__item{border:.06rem solid #eef2f6;border-radius:.6rem;
-    padding:.5rem;background:#fafcfd}
-.history__name{font-weight:800;font-size:.9rem}
-.history__time,.history__small{font-size:.75rem;color:#64748b}
+.history__item {
+  border: .06rem solid #eef2f6;
+  border-radius: .6rem;
+  padding: .5rem;
+  background: #fafcfd;
+
+  /* new flex layout */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history__left {
+  display: flex;
+  flex-direction: column;
+}
+
+.history__name {
+  font-weight: 800;
+  font-size: .9rem;
+}
+
+.history__small {
+  font-size: .75rem;
+  color: #64748b;
+  margin-top: .15rem;
+}
+
+.history__time {
+  font-size: .75rem;
+  color: #444;
+  white-space: nowrap;
+}
+

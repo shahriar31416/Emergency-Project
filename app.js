@@ -20,48 +20,57 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function addHistory(service, number) {
-    const li = document.createElement("li");
-    li.className = "history__item";
-    li.innerHTML = `
+  const li = document.createElement("li");
+  li.className = "history__item";
+  li.innerHTML = `
+    <div class="history__left">
       <div class="history__name">${service}</div>
       <div class="history__small">${number}</div>
-      <time class="history__time">${new Date().toLocaleTimeString()}</time>
-    `;
-    historyList.prepend(li);
-  }
+    </div>
+    <time class="history__time">${new Date().toLocaleTimeString()}</time>
+  `;
+  historyList.prepend(li);
+}
+
 
   clearBtn?.addEventListener("click", () => {
     historyList.innerHTML = "";
   });
+async function handleCopy(copyBtn) {
+  const card = copyBtn.closest(".card");
+  const number = card?.querySelector(".card__number")?.textContent?.trim() || "";
+  const serviceName = card?.querySelector(".card__subtitle")?.textContent?.trim() || "Unknown Service";
 
-  async function handleCopy(copyBtn){
-    const card = copyBtn.closest(".card");
-    const number = card?.querySelector(".card__number")?.textContent?.trim() || "";
-    if (!number || copyBtn.dataset.copying === "1") return;
+  if (!number || copyBtn.dataset.copying === "1") return;
 
-    try{
-      await navigator.clipboard.writeText(number);
-    }catch{
-      alert("❌ Copy not supported in this browser.");
-      return;
-    }
-
-    copyCount++;
-    copyCountEl.textContent = copyCount;
-
-    const original = copyBtn.innerHTML;
-    copyBtn.dataset.copying = "1";
-    copyBtn.disabled = true;
-    copyBtn.classList.add("is-copied");
-    copyBtn.innerHTML = "✓ Copied";
-
-    setTimeout(() => {
-      copyBtn.innerHTML = original;
-      copyBtn.classList.remove("is-copied");
-      copyBtn.disabled = false;
-      copyBtn.dataset.copying = "0";
-    }, 1200);
+  try {
+    await navigator.clipboard.writeText(number);
+  } catch {
+    alert("❌ Copy not supported in this browser.");
+    return;
   }
+
+  copyCount++;
+  copyCountEl.textContent = copyCount;
+
+  // ✅ New alert for copy
+  alert(`✅ Copied ${serviceName} (${number}) to clipboard.`);
+
+  // Button animation
+  const original = copyBtn.innerHTML;
+  copyBtn.dataset.copying = "1";
+  copyBtn.disabled = true;
+  copyBtn.classList.add("is-copied");
+  copyBtn.innerHTML = "✓ Copied";
+
+  setTimeout(() => {
+    copyBtn.innerHTML = original;
+    copyBtn.classList.remove("is-copied");
+    copyBtn.disabled = false;
+    copyBtn.dataset.copying = "0";
+  }, 1200);
+}
+
 
   document.addEventListener("click", (e) => {
     const callBtn = e.target.closest(".btn--call");
